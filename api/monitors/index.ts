@@ -1,5 +1,6 @@
 import { authenticate, handleError, jsonError } from '../_lib/auth.js';
-import { getMonitorsByUser, saveMonitor, type Monitor } from '../_lib/store.js';
+import { getMonitorsByUser, saveMonitor } from '../_lib/store.js';
+import type { Monitor } from '../_lib/store.js';
 
 export async function GET(request: Request) {
   try {

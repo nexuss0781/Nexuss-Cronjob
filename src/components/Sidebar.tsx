@@ -8,8 +8,10 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  Menu,
+  X,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface SidebarProps {
   monitors: { id: string; name: string; status: string }[];
@@ -21,20 +23,20 @@ export function Sidebar({ monitors, onAddClick }: SidebarProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
 
   const isActive = (path: string) => location.pathname === path;
 
-  return (
-    <aside
-      className={clsx(
-        'h-screen sticky top-0 flex flex-col border-r border-white/5 bg-[#0c0c14] transition-all duration-300',
-        collapsed ? 'w-[68px]' : 'w-64'
-      )}
-    >
+  const sidebarContent = (
+    <>
       <div className="flex items-center justify-between p-4 border-b border-white/5">
         {!collapsed && (
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shrink-0">
               <Activity className="w-4 h-4 text-white" />
             </div>
             <span className="font-semibold tracking-tight">Nexuss</span>
@@ -66,7 +68,7 @@ export function Sidebar({ monitors, onAddClick }: SidebarProps) {
         </button>
 
         <button
-          onClick={onAddClick}
+          onClick={() => { onAddClick(); setMobileOpen(false); }}
           className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-zinc-400 hover:bg-white/5 hover:text-white transition-all cursor-pointer"
         >
           <Plus className="w-4.5 h-4.5 shrink-0" />
@@ -100,9 +102,7 @@ export function Sidebar({ monitors, onAddClick }: SidebarProps) {
                 m.status === 'pending' && 'bg-yellow-400'
               )}
             />
-            {!collapsed && (
-              <span className="truncate">{m.name}</span>
-            )}
+            {!collapsed && <span className="truncate">{m.name}</span>}
           </button>
         ))}
       </nav>
@@ -122,6 +122,42 @@ export function Sidebar({ monitors, onAddClick }: SidebarProps) {
           {!collapsed && <span>Sign Out</span>}
         </button>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      <button
+        onClick={() => setMobileOpen(true)}
+        className="fixed top-4 left-4 z-50 p-2 rounded-xl bg-[#111118] border border-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer lg:hidden"
+      >
+        <Menu className="w-5 h-5" />
+      </button>
+
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      <aside
+        className={clsx(
+          'fixed top-0 left-0 h-screen z-50 flex flex-col border-r border-white/5 bg-[#0c0c14] transition-all duration-300 lg:sticky',
+          mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
+          collapsed ? 'w-[68px]' : 'w-64'
+        )}
+      >
+        <div className="flex items-center justify-end p-2 lg:hidden">
+          <button
+            onClick={() => setMobileOpen(false)}
+            className="p-2 rounded-lg hover:bg-white/5 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+        {sidebarContent}
+      </aside>
+    </>
   );
 }

@@ -3,8 +3,8 @@ import {
   getAllMonitors,
   saveMonitor,
   addCheckResult,
-  type CheckResult,
 } from '../_lib/store.js';
+import type { CheckResult } from '../_lib/store.js';
 
 export const maxDuration = 30;
 

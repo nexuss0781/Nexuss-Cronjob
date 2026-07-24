@@ -37,7 +37,7 @@ function AppContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
+      <div className="h-screen bg-[#0a0a0f] flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -52,12 +52,12 @@ function AppContent() {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#0a0a0f]">
+    <div className="flex h-screen bg-[#0a0a0f] overflow-hidden">
       <Sidebar
         monitors={monitors.map((m) => ({ id: m.id, name: m.name, status: m.status }))}
         onAddClick={() => setModalOpen(true)}
       />
-      <div className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto min-w-0">
         <Routes>
           <Route
             path="/"
@@ -72,7 +72,7 @@ function AppContent() {
           <Route path="/monitor/:id" element={<MonitorDetail />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-      </div>
+      </main>
       <AddMonitorModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}

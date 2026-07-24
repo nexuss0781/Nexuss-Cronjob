@@ -10,10 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@upstash/redis": "^1.38.0",
+    "@vercel/kv": "^3.0.0",
     "bcryptjs": "^3.0.2",
     "clsx": "^2.1.1",
     "jose": "^6.0.11",
     "lucide-react": "^0.511.0",
+    "postgres": "^3.4.9",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-router-dom": "^7.6.1",

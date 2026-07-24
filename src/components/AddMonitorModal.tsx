@@ -110,8 +110,8 @@ export function AddMonitorModal({ open, onClose, onAdd }: AddMonitorModalProps) 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-2xl bg-[#111118] border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
-        <div className="flex items-center justify-between p-5 border-b border-white/5">
+      <div className="relative w-full max-w-2xl bg-[#111118] border border-white/10 rounded-2xl shadow-2xl overflow-hidden mx-4">
+        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/5">
           <h2 className="text-lg font-semibold">Add Monitor</h2>
           <button
             onClick={onClose}
@@ -121,12 +121,12 @@ export function AddMonitorModal({ open, onClose, onAdd }: AddMonitorModalProps) 
           </button>
         </div>
 
-        <div className="p-5">
+        <div className="p-4 sm:p-5">
           <div className="mb-5">
             <label className="text-xs font-medium uppercase tracking-wider text-zinc-500 mb-3 block">
               Quick Start Templates
             </label>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {TEMPLATES.map((t, i) => (
                 <button
                   key={i}
@@ -149,7 +149,7 @@ export function AddMonitorModal({ open, onClose, onAdd }: AddMonitorModalProps) 
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="text-sm text-zinc-400 mb-1.5 block">Name</label>
                 <input
@@ -201,7 +201,7 @@ export function AddMonitorModal({ open, onClose, onAdd }: AddMonitorModalProps) 
                     type="button"
                     onClick={() => { setInterval(iv.value); setCustomInterval(''); }}
                     className={clsx(
-                      'px-3 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer',
+                      'px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all cursor-pointer',
                       interval === iv.value && customInterval === ''
                         ? 'bg-violet-500/20 text-violet-300 border border-violet-500/30'
                         : 'bg-white/5 text-zinc-400 border border-white/5 hover:bg-white/10'
