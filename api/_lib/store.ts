@@ -10,6 +10,21 @@ let db: DB = {
   checks: {},
 };
 
+function seedDefaults() {
+  if (Object.keys(db.users).length === 0) {
+    const defaultId = '00000000-0000-0000-0000-000000000001';
+    db.users[defaultId] = {
+      id: defaultId,
+      email: 'admin@nexuss.dev',
+      name: 'Admin',
+      passwordHash: '$2b$10$jdq4hgAc8sJVfqLw6e1veeC1kL8Cp/IzzAkK/NOms9ziu.6m68EIO',
+      createdAt: new Date().toISOString(),
+    };
+  }
+}
+
+seedDefaults();
+
 export function getUserByEmail(email: string) {
   return Object.values(db.users).find(u => u.email === email) || null;
 }

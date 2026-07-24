@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { api } from '../lib/api';
 import type { Monitor } from '../types';
-import { Layout } from '../components/Layout';
 import { MonitorCard } from '../components/MonitorCard';
-import { AddMonitorModal } from '../components/AddMonitorModal';
 import { StatsCard } from '../components/StatsCard';
 import {
   Plus,
@@ -14,25 +12,27 @@ import {
   RefreshCw,
 } from 'lucide-react';
 
-export function Dashboard() {
-  const [monitors, setMonitors] = useState<Monitor[]>([]);
+interface DashboardProps {
+  monitors: Monitor[];
+  setMonitors: React.Dispatch<React.SetStateAction<Monitor[]>>;
+  onAddClick: () => void;
+}
+
+export function Dashboard({ monitors, setMonitors, onAddClick }: DashboardProps) {
   const [loading, setLoading] = useState(true);
-  const [modalOpen, setModalOpen] = useState(false);
 
   const fetchMonitors = useCallback(async () => {
     try {
       const res = await api.monitors.list();
       setMonitors(res.monitors);
-    } catch {
-      /* ignore */
-    }
+    } catch {}
     setLoading(false);
-  }, []);
+  }, [setMonitors]);
 
   const triggerChecks = useCallback(async () => {
     try {
       await fetch('/api/monitors/check');
-    } catch { /* ignore */ }
+    } catch {}
   }, []);
 
   useEffect(() => {
@@ -50,10 +50,6 @@ export function Dashboard() {
     setMonitors((prev) => prev.filter((m) => m.id !== id));
   };
 
-  const handleAdd = (monitor: Monitor) => {
-    setMonitors((prev) => [monitor, ...prev]);
-  };
-
   const upCount = monitors.filter((m) => m.status === 'up').length;
   const downCount = monitors.filter((m) => m.status === 'down').length;
   const avgResponse =
@@ -67,7 +63,7 @@ export function Dashboard() {
       : 0;
 
   return (
-    <Layout>
+    <div className="p-6 lg:p-8">
       <div className="mb-8">
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -84,7 +80,7 @@ export function Dashboard() {
               <RefreshCw className="w-4 h-4" />
             </button>
             <button
-              onClick={() => setModalOpen(true)}
+              onClick={onAddClick}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white text-sm font-medium transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4" />
@@ -127,7 +123,7 @@ export function Dashboard() {
           <h3 className="text-lg font-medium mb-1">No monitors yet</h3>
           <p className="text-zinc-500 text-sm mb-4">Add your first monitor to get started</p>
           <button
-            onClick={() => setModalOpen(true)}
+            onClick={onAddClick}
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white text-sm font-medium transition-all cursor-pointer"
           >
             <Plus className="w-4 h-4" />
@@ -141,8 +137,6 @@ export function Dashboard() {
           ))}
         </div>
       )}
-
-      <AddMonitorModal open={modalOpen} onClose={() => setModalOpen(false)} onAdd={handleAdd} />
-    </Layout>
+    </div>
   );
 }

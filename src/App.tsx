@@ -1,12 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './hooks/useAuth';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Dashboard } from './pages/Dashboard';
+import { MonitorDetail } from './pages/MonitorDetail';
+import { Sidebar } from './components/Sidebar';
+import { AddMonitorModal } from './components/AddMonitorModal';
+import { api } from './lib/api';
+import type { Monitor } from './types';
 
 function AppContent() {
   const { user, loading } = useAuth();
   const [showRegister, setShowRegister] = useState(false);
+  const [monitors, setMonitors] = useState<Monitor[]>([]);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const fetchMonitors = useCallback(async () => {
+    if (!user) return;
+    try {
+      const res = await api.monitors.list();
+      setMonitors(res.monitors);
+    } catch {}
+  }, [user]);
+
+  useEffect(() => {
+    fetchMonitors();
+    const interval = setInterval(fetchMonitors, 15000);
+    return () => clearInterval(interval);
+  }, [fetchMonitors]);
+
+  const handleAdd = (monitor: Monitor) => {
+    setMonitors((prev) => [monitor, ...prev]);
+    setModalOpen(false);
+  };
 
   if (loading) {
     return (
@@ -24,13 +51,43 @@ function AppContent() {
     );
   }
 
-  return <Dashboard />;
+  return (
+    <div className="flex min-h-screen bg-[#0a0a0f]">
+      <Sidebar
+        monitors={monitors.map((m) => ({ id: m.id, name: m.name, status: m.status }))}
+        onAddClick={() => setModalOpen(true)}
+      />
+      <div className="flex-1 overflow-y-auto">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Dashboard
+                monitors={monitors}
+                setMonitors={setMonitors}
+                onAddClick={() => setModalOpen(true)}
+              />
+            }
+          />
+          <Route path="/monitor/:id" element={<MonitorDetail />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </div>
+      <AddMonitorModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onAdd={handleAdd}
+      />
+    </div>
+  );
 }
 
 export default function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
