@@ -1,0 +1,17 @@
+SETUP INSTRUCTIONS
+==================
+
+1. Run SQL in Supabase
+   - Go to: https://supabase.com/dashboard/project/ykltakdphriesavizkvb/sql/new
+   - Paste the contents of supabase-setup.sql
+   - Click "Run" to create the tables
+
+2. Add DATABASE_URL in Vercel
+   - Go to: https://vercel.com/tadi0781-5784s-projects/nexuss-cronjob/settings/environment-variables
+   - Click "Add"
+   - Key: DATABASE_URL
+   - Value: postgresql://postgres.ykltakdphriesavizkvb:nexuss_password_2024@aws-0-us-east-1.pooler.supabase.com:6543/postgres
+   - Environment: Production
+   - Click "Save"
+
+3. Tell the developer "done" to deploy
