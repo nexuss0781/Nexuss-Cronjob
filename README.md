@@ -2,7 +2,7 @@
   <img src="public/favicon.svg" alt="Nexuss Logo" width="80" height="80" />
 </p>
 
-<h1 align="center">Nexuss</h1>
+<h1 align="center">Nexuss Cronjob</h1>
 
 <p align="center">
   Real-time uptime monitoring and alerting platform for APIs, websites, and services.
@@ -16,7 +16,7 @@
 
 ## Overview
 
-Nexuss is a full-stack uptime monitoring application that continuously checks your endpoints and tracks their availability, response times, status codes, and uptime percentages. Built with React, TypeScript, and Vercel Serverless Functions.
+Nexuss Cronjob is a full-stack uptime monitoring application that continuously checks your endpoints and tracks their availability, response times, status codes, and uptime percentages. Built with React, TypeScript, and Vercel Serverless Functions.
 
 ## Features
 
