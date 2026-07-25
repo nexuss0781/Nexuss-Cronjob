@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
 import type { Monitor, CheckResult } from '../types';
+import { timeAgo } from '../lib/time';
 import { StatusBadge } from '../components/StatusBadge';
 import {
   LineChart,
@@ -273,7 +274,7 @@ export function MonitorDetail() {
                   <span className="text-red-400/80 text-[10px] truncate flex-1">{c.error}</span>
                 )}
                 <span className="text-zinc-700 text-[10px] ml-auto whitespace-nowrap">
-                  {new Date(c.timestamp).toLocaleString()}
+                  {timeAgo(c.timestamp)}
                 </span>
               </div>
             ))}

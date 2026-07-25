@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Monitor, CheckResult } from '../types';
 import { api } from '../lib/api';
+import { timeAgo } from '../lib/time';
 import { StatusBadge } from './StatusBadge';
 import {
   Clock,
@@ -129,7 +130,7 @@ export function MonitorCard({ monitor, onDelete }: MonitorCardProps) {
         {monitor.lastCheck && (
           <div className="mt-3 text-[10px] text-zinc-700 flex items-center gap-1">
             <Clock className="w-3 h-3" />
-            Last checked: {new Date(monitor.lastCheck).toLocaleString()}
+            Last checked: {timeAgo(monitor.lastCheck)}
           </div>
         )}
       </div>
@@ -166,7 +167,7 @@ export function MonitorCard({ monitor, onDelete }: MonitorCardProps) {
                     <span className="text-red-400/80 text-[10px] truncate flex-1">{check.error}</span>
                   )}
                   <span className="text-zinc-700 text-[10px] ml-auto whitespace-nowrap">
-                    {new Date(check.timestamp).toLocaleTimeString()}
+                    {timeAgo(check.timestamp)}
                   </span>
                 </div>
               ))}

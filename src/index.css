@@ -115,28 +115,29 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15), 0 0 20px rgba(139, 92, 246, 0.08);
 }
 
-.modal-scroll {
+/* Modal scrollbar - always visible */
+[class*="overflow-y-auto"].overscroll-contain {
   scrollbar-width: thin;
-  scrollbar-color: rgba(139, 92, 246, 0.25) transparent;
+  scrollbar-color: rgba(139, 92, 246, 0.3) rgba(255, 255, 255, 0.03);
 }
 
-.modal-scroll::-webkit-scrollbar {
+[class*="overflow-y-auto"].overscroll-contain::-webkit-scrollbar {
   width: 6px;
 }
 
-.modal-scroll::-webkit-scrollbar-track {
-  background: transparent;
+[class*="overflow-y-auto"].overscroll-contain::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
   margin: 8px 0;
 }
 
-.modal-scroll::-webkit-scrollbar-thumb {
-  background: rgba(139, 92, 246, 0.3);
+[class*="overflow-y-auto"].overscroll-contain::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.35);
   border-radius: 10px;
-  border: 1px solid rgba(139, 92, 246, 0.1);
 }
 
-.modal-scroll::-webkit-scrollbar-thumb:hover {
-  background: rgba(139, 92, 246, 0.5);
+[class*="overflow-y-auto"].overscroll-contain::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.55);
 }
 
 .noise-bg {

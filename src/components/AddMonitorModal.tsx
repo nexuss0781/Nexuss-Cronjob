@@ -127,7 +127,7 @@ export function AddMonitorModal({ open, onClose, onAdd }: AddMonitorModalProps) 
           </button>
         </div>
 
-        <div className="modal-scroll overflow-y-auto flex-1 overscroll-contain px-6 py-5">
+        <div className="overflow-y-auto flex-1 overscroll-contain px-6 py-5">
           <div className="mb-5">
             <label className="text-[10px] font-semibold uppercase tracking-widest text-zinc-600 mb-3 block">
               Quick Start
