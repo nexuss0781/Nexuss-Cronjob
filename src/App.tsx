@@ -37,8 +37,8 @@ function AppContent() {
 
   if (loading) {
     return (
-      <div className="h-screen bg-[#0a0a0f] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      <div className="h-screen bg-[#06060b] flex items-center justify-center">
+        <span className="w-6 h-6 border-2 border-zinc-700 border-t-zinc-400 rounded-full animate-spin" />
       </div>
     );
   }
@@ -52,7 +52,7 @@ function AppContent() {
   }
 
   return (
-    <div className="flex h-screen bg-[#0a0a0f] overflow-hidden">
+    <div className="flex h-screen bg-[#06060b] overflow-hidden">
       <Sidebar
         monitors={monitors.map((m) => ({ id: m.id, name: m.name, status: m.status }))}
         onAddClick={() => setModalOpen(true)}

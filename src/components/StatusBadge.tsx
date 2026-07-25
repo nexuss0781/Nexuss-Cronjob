@@ -8,10 +8,10 @@ export function StatusBadge({ status }: StatusBadgeProps) {
   return (
     <span
       className={clsx(
-        'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium',
-        status === 'up' && 'bg-emerald-500/10 text-emerald-400',
-        status === 'down' && 'bg-red-500/10 text-red-400',
-        status === 'pending' && 'bg-yellow-500/10 text-yellow-400'
+        'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider',
+        status === 'up' && 'bg-emerald-500/[0.1] text-emerald-400',
+        status === 'down' && 'bg-red-500/[0.1] text-red-400',
+        status === 'pending' && 'bg-yellow-500/[0.1] text-yellow-400'
       )}
     >
       <span
