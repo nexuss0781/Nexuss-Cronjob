@@ -1,13 +1,27 @@
 import { connect } from 'parad';
 
-const db = await connect({
-  name: process.env.PARADOX_DB || 'nexuss-cronjob',
-  project: process.env.PARADOX_PROJECT || 'nexuss',
-  gatewayUrl: process.env.PARADOX_GATEWAY || 'https://paradox-db.onrender.com/v1',
-  apiKey: process.env.PARADOX_TOKEN,
-  passphrase: process.env.PARADOX_PASSPHRASE,
-  pullOnStartup: true,
-});
+async function connectWithRetry() {
+  let lastErr: unknown;
+  for (let attempt = 1; attempt <= 6; attempt++) {
+    try {
+      return await connect({
+        name: process.env.PARADOX_DB || 'nexuss-cronjob',
+        project: process.env.PARADOX_PROJECT || 'nexuss',
+        gatewayUrl: process.env.PARADOX_GATEWAY || 'https://paradox-db.onrender.com/v1',
+        apiKey: process.env.PARADOX_TOKEN,
+        passphrase: process.env.PARADOX_PASSPHRASE,
+        pullOnStartup: true,
+      });
+    } catch (err) {
+      lastErr = err;
+      console.error(`parad connect attempt ${attempt}/6 failed: ${err instanceof Error ? err.message : err}`);
+      await new Promise((r) => setTimeout(r, Math.min(1000 * 2 ** attempt, 30000)));
+    }
+  }
+  throw lastErr;
+}
+
+const db = await connectWithRetry();
 
 async function ensureTables() {
   db.execute(`
