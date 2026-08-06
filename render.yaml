@@ -11,7 +11,15 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 22.18.0
-      - key: DATABASE_URL
+      - key: PARADOX_GATEWAY
+        value: https://paradox-db.onrender.com/v1
+      - key: PARADOX_TOKEN
         sync: false
+      - key: PARADOX_PASSPHRASE
+        sync: false
+      - key: PARADOX_PROJECT
+        value: nexuss
+      - key: PARADOX_DB
+        value: nexuss-cronjob
       - key: JWT_SECRET
         sync: false
