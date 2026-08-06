@@ -92,7 +92,10 @@ async function init() {
 }
 
 function toRow(monitor: any) {
-  const row = { ...monitor };
+  const row: Record<string, any> = {};
+  for (const [key, value] of Object.entries(monitor)) {
+    row[key] = value === undefined ? null : value;
+  }
   if (row.headers && typeof row.headers !== 'string') {
     row.headers = JSON.stringify(row.headers);
   }
